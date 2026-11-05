@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wuan North Gate Restaurant — Software Development and Services</title>
+<meta name="description" content="Wuan North Gate Restaurant is a software development and services company. Custom systems, platform engineering, data integration and long-term operational support, built by small senior teams.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2312251F'/%3E%3Cpath d='M7 27V14a9 9 0 0 1 18 0v13' fill='none' stroke='%23C0993F' stroke-width='2.2'/%3E%3Cpath d='M12 27V15a4 4 0 0 1 8 0v12' fill='none' stroke='%23C0993F' stroke-width='1.2' opacity='.55'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://miaoda.feishu.cn">
+<link rel="preconnect" href="https://sf3-scmcdn-cn.feishucdn.com" crossorigin>
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --paper:#F1F0E9;
+  --paper-2:#E7E6DC;
+  --ink:#14211C;
+  --pine:#12251F;
+  --pine-2:#1B342C;
+  --brass:#C0993F;
+  --brass-dim:#8C7133;
+  --muted:#5C6A61;
+  --line:#D4D4C7;
+  --line-dark:rgba(192,153,63,.22);
+  --display:"Archivo","Helvetica Neue",Helvetica,sans-serif;
+  --body:"IBM Plex Sans","Helvetica Neue",Helvetica,sans-serif;
+  --gutter:20px;
+  --measure:34rem;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:16px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+h1,h2,h3,h4{margin:0;font-family:var(--display);font-weight:600;letter-spacing:-.022em;line-height:1.08}
+h1{font-size:clamp(2.35rem,8.4vw,4.9rem);letter-spacing:-.035em}
+h2{font-size:clamp(1.6rem,4.4vw,2.65rem)}
+h3{font-size:clamp(1.06rem,2.4vw,1.3rem);line-height:1.22;letter-spacing:-.015em}
+p{margin:0}
+ul{margin:0;padding:0;list-style:none}
+
+section[id],main[id]{scroll-margin-top:84px}
+.shell{width:100%;max-width:1240px;margin:0 auto;padding:0 var(--gutter)}
+@media (min-width:900px){ :root{--gutter:48px} }
+
+.link-arrow{
+  display:inline-flex;align-items:baseline;gap:.5rem;
+  font-family:var(--body);font-size:.88rem;font-weight:500;
+  color:var(--ink);border-bottom:1px solid var(--brass);
+  padding-bottom:2px;transition:color .18s,border-color .18s;
+}
+.link-arrow:hover{color:var(--brass-dim);border-color:var(--ink)}
+
+/* ---------- header ---------- */
+.site-header{
+  position:sticky;top:0;z-index:50;
+  background:var(--paper);
+  border-bottom:1px solid var(--line);
+}
+.header-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:1rem;min-height:64px;
+}
+.brand{display:flex;align-items:center;gap:.7rem;min-width:0}
+.brand-mark{width:26px;height:30px;flex:none}
+.brand-word{display:flex;flex-direction:column;line-height:1.12;min-width:0}
+.brand-name{font-family:var(--display);font-weight:600;font-size:.97rem;letter-spacing:-.02em;white-space:nowrap}
+.brand-sub{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.nav{display:none}
+.nav a{
+  font-size:.86rem;font-weight:500;color:var(--ink);
+  padding:.35rem 0;position:relative;
+}
+.nav a::after{
+  content:"";position:absolute;left:0;right:100%;bottom:0;height:1px;background:var(--brass);
+  transition:right .22s ease;
+}
+.nav a:hover::after,.nav a[aria-current="true"]::after{right:0}
+.nav a[aria-current="true"]{color:var(--brass-dim)}
+.menu-btn{
+  display:inline-flex;align-items:center;gap:.55rem;
+  min-height:44px;padding:0 .2rem;
+  font-size:.8rem;letter-spacing:.04em;color:var(--ink);
+}
+.menu-btn .bars{width:20px;display:grid;gap:4px}
+.menu-btn .bars i{display:block;height:1.5px;background:var(--ink);transition:transform .2s}
+@media (min-width:900px){
+  .nav{display:flex;gap:1.15rem;align-items:center}
+  .nav a{font-size:.82rem}
+  .menu-btn{display:none}
+  .header-inner{min-height:76px}
+  .brand-mark{width:30px;height:34px}
+  .brand-name{font-size:1.05rem}
+}
+
+/* mobile drawer */
+.drawer{
+  position:fixed;inset:0;z-index:60;background:var(--pine);color:var(--paper);
+  display:none;padding:calc(var(--gutter) + 8px) var(--gutter) var(--gutter);
+}
+.drawer[open],.drawer.is-open{display:block}
+.drawer-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:2.2rem}
+.drawer-close{min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:flex-start;font-size:.8rem;letter-spacing:.06em;color:var(--paper)}
+.drawer nav{display:grid;gap:.2rem}
+.drawer nav a{
+  font-family:var(--display);font-weight:500;font-size:1.45rem;letter-spacing:-.02em;
+  padding:.72rem 0;border-bottom:1px solid var(--line-dark);
+}
+.drawer-foot{margin-top:2.4rem;font-size:.82rem;color:rgba(241,240,233,.62);line-height:1.7}
+
+/* ---------- hero ---------- */
+.hero{padding:clamp(2.6rem,7vw,5.5rem) 0 clamp(2.6rem,6vw,4.5rem)}
+.hero-grid{display:grid;gap:clamp(2rem,5vw,3rem)}
+.kicker{
+  display:flex;align-items:center;gap:.65rem;
+  font-size:.8rem;color:var(--muted);margin-bottom:1.5rem;
+}
+.kicker::before{content:"";width:22px;height:1px;background:var(--brass);flex:none}
+.hero h1{margin-bottom:1.4rem;max-width:19ch}
+.hero h1 em{font-style:normal;color:var(--brass-dim)}
+.hero-lede{
+  max-width:var(--measure);font-size:clamp(1rem,2.4vw,1.12rem);
+  color:#2F3D36;line-height:1.66;
+}
+.hero-actions{display:flex;flex-wrap:wrap;align-items:center;gap:1rem 1.8rem;margin-top:2rem}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:48px;padding:0 1.4rem;
+  background:var(--ink);color:var(--paper);
+  font-family:var(--body);font-size:.9rem;font-weight:500;
+  transition:background .18s,transform .18s;
+}
+.btn:hover{background:var(--pine-2)}
+.btn:active{transform:translateY(1px)}
+.hero-note{
+  margin-top:2.4rem;padding-top:1.1rem;border-top:1px solid var(--line);
+  display:flex;flex-wrap:wrap;gap:.4rem 1.4rem;
+  font-size:.8rem;color:var(--muted);
+}
+.hero-note span{display:inline-flex;align-items:center;gap:.5rem}
+.hero-note span::before{content:"";width:4px;height:4px;background:var(--brass);transform:rotate(45deg)}
+
+.gate-figure{
+  background:var(--pine);color:var(--paper);
+  padding:clamp(1.1rem,3vw,1.6rem);
+  display:flex;flex-direction:column;gap:1rem;
+  position:relative;overflow:hidden;
+}
+.gate-figure svg{width:100%;height:auto}
+.gate-cap{font-size:.76rem;line-height:1.6;color:rgba(241,240,233,.66);max-width:32ch}
+.gate-cap strong{display:block;color:var(--paper);font-weight:500;letter-spacing:.02em;margin-bottom:.15rem}
+
+.gate-svg .arch{stroke:var(--brass);fill:none}
+.gate-svg .band{stroke:rgba(192,153,63,.34);fill:none}
+.gate-svg .node{fill:var(--brass)}
+.gate-svg text{
+  font-family:var(--body);font-size:9.5px;fill:rgba(241,240,233,.7);letter-spacing:.12em;text-transform:uppercase;
+}
+@media (min-width:900px){
+  .hero-grid{grid-template-columns:minmax(0,1.35fr) minmax(0,.78fr);gap:clamp(2.5rem,5vw,4.5rem);align-items:start}
+  .gate-figure{position:sticky;top:110px}
+}
+
+/* ---------- section scaffolding ---------- */
+.section{padding:clamp(2.6rem,6vw,4.6rem) 0;border-top:1px solid var(--line)}
+.section-dark{background:var(--pine);color:var(--paper);border-top:1px solid var(--pine)}
+.section-head{
+  display:grid;gap:.9rem;margin-bottom:clamp(1.8rem,4vw,3rem);
+}
+.section-head h2{max-width:22ch}
+.section-head p{max-width:40ch;font-size:.92rem;color:var(--muted);line-height:1.65}
+.section-dark .section-head p{color:rgba(241,240,233,.65)}
+.section-label{
+  font-size:.78rem;color:var(--brass-dim);letter-spacing:.02em;
+}
+.section-dark .section-label{color:var(--brass)}
+@media (min-width:900px){
+  .section-head{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);align-items:end;gap:2.5rem}
+  .section-head p{justify-self:end;text-align:left}
+}
+
+/* ---------- service ledger ---------- */
+.ledger{border-top:1px solid var(--line)}
+.srow{border-bottom:1px solid var(--line);transition:background .2s}
+.srow:hover{background:rgba(231,230,220,.42)}
+.srow-btn{
+  width:100%;display:grid;grid-template-columns:1fr auto;gap:.35rem 1rem;
+  padding:1.25rem 0;text-align:left;align-items:start;
+}
+.srow-main{min-width:0;display:block}
+.srow-title{
+  font-family:var(--display);font-weight:600;font-size:clamp(1.02rem,2.6vw,1.16rem);
+  letter-spacing:-.015em;display:flex;align-items:baseline;gap:.7rem;
+}
+.srow-title .idx{font-family:var(--body);font-weight:400;font-size:.72rem;color:var(--brass-dim);letter-spacing:.06em;flex:none}
+.srow-sum{display:block;margin-top:.42rem;font-size:.89rem;color:var(--muted);max-width:52ch;line-height:1.6}
+.srow-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.7rem}
+.tag{font-size:.72rem;letter-spacing:.02em;color:#3C4A43;padding:.16rem .5rem;border:1px solid var(--line)}
+.toggle{
+  width:34px;height:34px;flex:none;border:1px solid var(--line);
+  display:grid;place-items:center;transition:border-color .2s,background .2s;margin-top:.2rem;
+}
+.toggle svg{width:12px;height:12px;transition:transform .25s ease}
+.srow-btn[aria-expanded="true"] .toggle{background:var(--ink);border-color:var(--ink)}
+.srow-btn[aria-expanded="true"] .toggle svg{transform:rotate(45deg);stroke:var(--paper)}
+.srow-btn[aria-expanded="true"] .toggle svg line{stroke:var(--paper)}
+.detail{
+  display:none;padding:0 0 1.5rem;
+}
+.detail.is-open{display:block}
+.detail-grid{display:grid;gap:1.1rem}
+.detail-list{display:grid;gap:.55rem}
+.detail-list li{
+  display:grid;grid-template-columns:14px 1fr;gap:.55rem;
+  font-size:.87rem;color:#33423B;line-height:1.6;
+}
+.detail-list li::before{content:"";width:5px;height:1px;background:var(--brass);margin-top:.75rem}
+.detail-aside{font-size:.82rem;color:var(--muted);line-height:1.65;border-top:1px solid var(--line);padding-top:.9rem}
+.detail-aside strong{display:block;font-weight:500;color:var(--ink);font-size:.76rem;letter-spacing:.02em;margin-bottom:.2rem}
+@media (min-width:900px){
+  .srow-btn{grid-template-columns:minmax(0,.9fr) minmax(0,1.5fr) 40px;gap:2rem;padding:1.5rem 0}
+  .srow-title{font-size:1.18rem}
+  .srow-sum{margin-top:0;font-size:.9rem}
+  .srow-tags{margin-top:.55rem}
+  .detail{padding-bottom:1.8rem}
+  .detail-grid{grid-template-columns:minmax(0,1.5fr) minmax(0,.9fr);gap:2.5rem}
+}
+
+/* ---------- process timeline ---------- */
+.timeline{display:grid;gap:0}
+.stage{
+  display:grid;grid-template-columns:64px 1fr;
+  column-gap:1.1rem;padding-bottom:1.9rem;position:relative;
+}
+.stage::before{
+  content:"";position:absolute;left:81px;top:14px;bottom:0;width:1px;background:var(--line);
+}
+.stage:last-child::before{display:none}
+.stage-when{
+  font-size:.72rem;color:var(--brass-dim);letter-spacing:.03em;line-height:1.4;padding-top:.3rem;
+}
+.stage-dot{
+  position:absolute;left:78px;top:8px;width:7px;height:7px;
+  background:var(--brass);transform:rotate(45deg);
+}
+.stage-body{padding-left:1.2rem;min-width:0}
+.stage-body h3{margin-bottom:.3rem}
+.stage-body p{font-size:.89rem;color:var(--muted);max-width:var(--measure);line-height:1.62}
+.stage-leave{
+  margin-top:.6rem;font-size:.76rem;color:var(--ink);
+  display:flex;gap:.5rem;align-items:baseline;
+}
+.stage-leave span{color:var(--brass-dim)}
+@media (min-width:1100px){
+  .nav{gap:2rem}
+  .nav a{font-size:.86rem}
+}
+@media (min-width:900px){
+  .stage{grid-template-columns:96px 12px minmax(0,1fr);column-gap:1.4rem;padding-bottom:2.4rem}
+  .stage::before{left:124px}
+  .stage-dot{left:121px}
+  .stage-body{grid-column:3;padding-left:1.6rem}
+  .stage-body p{font-size:.92rem;max-width:36rem}
+  .stage-leave{margin-top:.5rem}
+}
+
+/* ---------- standards ---------- */
+.standards{display:grid;gap:0;border-top:1px solid var(--line-dark)}
+.std{
+  padding:1.6rem 0;border-bottom:1px solid var(--line-dark);
+  display:grid;gap:.5rem;
+}
+.std h3{color:var(--paper);font-size:clamp(1.05rem,2.4vw,1.22rem)}
+.std p{font-size:.89rem;color:rgba(241,240,233,.72);max-width:44ch;line-height:1.65}
+.std-mark{width:14px;height:1px;background:var(--brass);margin-bottom:.3rem}
+@media (min-width:900px){
+  .standards{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:4rem}
+}
+.std-quote{
+  margin-top:clamp(2rem,4vw,3rem);padding-top:1.4rem;border-top:1px solid var(--line-dark);
+  font-family:var(--display);font-weight:500;font-size:clamp(1.1rem,2.8vw,1.5rem);
+  letter-spacing:-.02em;line-height:1.35;color:var(--paper);max-width:30ch;
+}
+.std-quote span{color:var(--brass)}
+
+/* ---------- stack ---------- */
+.stack-grid{display:grid;gap:0;border-top:1px solid var(--line)}
+.stack-col{padding:1.4rem 0;border-bottom:1px solid var(--line)}
+.stack-col h3{font-size:.94rem;letter-spacing:.01em;font-family:var(--body);font-weight:600;margin-bottom:.7rem}
+.stack-col ul{display:flex;flex-wrap:wrap;gap:.35rem .9rem}
+.stack-col li{font-size:.85rem;color:var(--muted)}
+.stack-note{
+  margin-top:1.6rem;font-size:.86rem;color:var(--muted);max-width:56ch;line-height:1.65;
+}
+.stack-note strong{color:var(--ink);font-weight:500}
+@media (min-width:760px){
+  .stack-grid{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:3rem}
+}
+@media (min-width:1100px){
+  .stack-grid{grid-template-columns:repeat(5,minmax(0,1fr));column-gap:2rem}
+  .stack-col{border-bottom:0;border-top:0;padding-top:0}
+}
+
+/* ---------- engagements ---------- */
+.models-tabs{
+  display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.8rem;
+  border-bottom:1px solid var(--line);padding-bottom:.9rem;
+}
+.model-tab{
+  padding:.6rem .95rem;border:1px solid var(--line);
+  font-size:.85rem;color:var(--muted);transition:all .18s;min-height:44px;
+}
+.model-tab:hover{border-color:var(--brass);color:var(--ink)}
+.model-tab[aria-selected="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.model-panel{display:none}
+.model-panel.is-active{display:block}
+.model-top{display:grid;gap:.5rem;margin-bottom:1.8rem;max-width:52ch}
+.model-top h3{font-size:clamp(1.15rem,3vw,1.5rem)}
+.model-top p{font-size:.92rem;color:var(--muted);line-height:1.65}
+.model-facts{display:grid;gap:0;border-top:1px solid var(--line)}
+.fact{padding:1.05rem 0;border-bottom:1px solid var(--line);display:grid;gap:.3rem}
+.fact dt{font-size:.74rem;letter-spacing:.04em;text-transform:uppercase;color:var(--brass-dim)}
+.fact dd{margin:0;font-size:.9rem;line-height:1.6;color:#2F3D36}
+@media (min-width:760px){
+  .model-facts{grid-template-columns:repeat(3,minmax(0,1fr));column-gap:2.4rem;border-bottom:1px solid var(--line)}
+  .fact{border-bottom:0;border-top:1px solid var(--line);padding-top:1.2rem}
+}
+
+/* ---------- about ---------- */
+.about-grid{display:grid;gap:2rem}
+.about-lead{
+  font-family:var(--display);font-weight:500;
+  font-size:clamp(1.25rem,3.6vw,1.85rem);line-height:1.3;letter-spacing:-.02em;max-width:24ch;
+}
+.about-lead em{font-style:normal;color:var(--brass-dim)}
+.about-body{display:grid;gap:1rem;max-width:var(--measure)}
+.about-body p{font-size:.92rem;color:#2F3D36;line-height:1.7}
+.about-body p:first-child{color:var(--ink);font-size:.98rem}
+.what-we-dont{margin-top:1.8rem;padding-top:1.2rem;border-top:1px solid var(--line)}
+.what-we-dont h3{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;font-family:var(--body);font-weight:600;color:var(--muted);margin-bottom:.8rem}
+.what-we-dont li{
+  display:grid;grid-template-columns:16px 1fr;gap:.6rem;font-size:.88rem;line-height:1.6;padding:.36rem 0;color:#33423B;
+}
+.what-we-dont li::before{content:"—";color:var(--brass);font-size:.8rem}
+@media (min-width:900px){
+  .about-grid{grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:4rem}
+  .about-lead{position:sticky;top:120px}
+}
+
+/* ---------- footer ---------- */
+.site-footer{background:var(--pine);color:var(--paper);padding:clamp(2.6rem,6vw,4rem) 0 1.6rem;border-top:1px solid var(--pine)}
+.footer-top{display:grid;gap:2.4rem;padding-bottom:2.4rem;border-bottom:1px solid var(--line-dark)}
+.footer-brand{max-width:24ch}
+.footer-brand .brand-name{display:block;font-size:clamp(1.5rem,4vw,2.1rem);color:var(--paper);line-height:1.1;letter-spacing:-.03em;white-space:normal}
+.footer-brand p{margin-top:.6rem;font-size:.8rem;color:rgba(241,240,233,.6);line-height:1.65}
+.footer-cols{display:grid;gap:1.8rem}
+.fcol h4{font-family:var(--body);font-weight:600;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--brass);margin-bottom:.75rem}
+.fcol a{display:block;font-size:.85rem;color:rgba(241,240,233,.78);padding:.24rem 0;transition:color .18s}
+.fcol a:hover{color:var(--paper)}
+.footer-bottom{
+  padding-top:1.4rem;display:grid;gap:.6rem;
+  font-size:.74rem;color:rgba(241,240,233,.52);line-height:1.6;
+}
+.footer-bottom p:last-child{max-width:52ch}
+@media (min-width:760px){
+  .footer-cols{grid-template-columns:repeat(3,minmax(0,1fr));gap:2rem}
+}
+@media (min-width:900px){
+  .footer-top{grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);gap:4rem}
+}
+
+/* ---------- motion ---------- */
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes draw{from{stroke-dashoffset:420}to{stroke-dashoffset:0}}
+.hero h1,.hero-lede,.hero-actions,.hero-note,.gate-figure{
+  animation:rise .72s cubic-bezier(.2,.7,.3,1) both;
+}
+.hero h1{animation-delay:.04s}
+.hero-lede{animation-delay:.14s}
+.hero-actions{animation-delay:.2s}
+.hero-note{animation-delay:.28s}
+.gate-figure{animation-delay:.1s}
+.gate-svg .arch{stroke-dasharray:420;animation:draw 1.3s ease-out both}
+.gate-svg .arch:nth-of-type(2){animation-delay:.12s}
+.gate-svg .arch:nth-of-type(3){animation-delay:.22s}
+.gate-svg .arch:nth-of-type(4){animation-delay:.32s}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+
+a:focus-visible,button:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
+@media (prefers-reduced-motion:no-preference){
+  html{scroll-behavior:smooth}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <path id="archPath" d="M32 540 V250 C32 138 118 52 210 52 C302 52 388 138 388 250 V540"/>
+  </defs>
+</svg>
+
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href="#top" aria-label="Wuan North Gate Restaurant, home">
+      <svg class="brand-mark" viewBox="0 0 30 34" aria-hidden="true">
+        <path d="M3 33V15a12 12 0 0 1 24 0v18" fill="none" stroke="#14211C" stroke-width="2"/>
+        <path d="M9 33V16a6 6 0 0 1 12 0v17" fill="none" stroke="#C0993F" stroke-width="1.4"/>
+        <line x1="0" y1="33" x2="30" y2="33" stroke="#14211C" stroke-width="1"/>
+      </svg>
+      <span class="brand-word">
+        <span class="brand-name">Wuan North Gate</span>
+        <span class="brand-sub">Restaurant</span>
+      </span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#services">Services</a>
+      <a href="#approach">Approach</a>
+      <a href="#standards">Standards</a>
+      <a href="#technology">Technology</a>
+      <a href="#engagements">Engagements</a>
+      <a href="#about">Studio</a>
+    </nav>
+    <button class="menu-btn" type="button" id="menuOpen" aria-expanded="false" aria-controls="drawer">
+      <span class="bars" aria-hidden="true"><i></i><i></i></span>
+      Menu
+    </button>
+  </div>
+</header>
+
+<div class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-top">
+    <span class="brand-name" style="color:var(--paper)">Wuan North Gate</span>
+    <button class="drawer-close" type="button" id="menuClose">Close</button>
+  </div>
+  <nav aria-label="Mobile">
+    <a href="#services">Services</a>
+    <a href="#approach">Approach</a>
+    <a href="#standards">Standards</a>
+    <a href="#technology">Technology</a>
+    <a href="#engagements">Engagements</a>
+    <a href="#about">Studio</a>
+  </nav>
+  <p class="drawer-foot">Software development and services.<br>Custom systems, platform engineering, data integration, and long-term support.</p>
+</div>
+
+<main id="top">
+
+  <!-- ===== Hero ===== -->
+  <section class="hero">
+    <div class="shell hero-grid">
+      <div class="hero-copy">
+        <p class="kicker">Software development and services</p>
+        <h1>Software that holds long after the launch.</h1>
+        <p class="hero-lede">Wuan North Gate Restaurant designs, builds and maintains the systems a business actually runs on: custom applications, platform engineering, data integration, and the quiet operational work that keeps them alive.</p>
+        <div class="hero-actions">
+          <a class="btn" href="#services">Read the service index</a>
+          <a class="link-arrow" href="#approach">How work moves through us</a>
+        </div>
+        <div class="hero-note">
+          <span>Fixed-scope builds</span>
+          <span>Embedded engineering teams</span>
+          <span>Long-term support</span>
+        </div>
+      </div>
+
+      <figure class="gate-figure">
+        <svg class="gate-svg" viewBox="0 0 500 566" role="img" aria-label="A drawing of a layered arch, used as a diagram of the software stack">
+          <use href="#archPath" xlink:href="#archPath" class="arch"/>
+          <use href="#archPath" xlink:href="#archPath" class="arch" transform="translate(210 540) scale(.87) translate(-210 -540)" opacity=".8"/>
+          <use href="#archPath" xlink:href="#archPath" class="arch" transform="translate(210 540) scale(.74) translate(-210 -540)" opacity=".62"/>
+          <use href="#archPath" xlink:href="#archPath" class="arch" transform="translate(210 540) scale(.61) translate(-210 -540)" opacity=".44"/>
+
+          <line class="band" x1="52" y1="226" x2="368" y2="226"/>
+          <line class="band" x1="58" y1="298" x2="362" y2="298"/>
+          <line class="band" x1="66" y1="370" x2="354" y2="370"/>
+          <line class="band" x1="74" y1="442" x2="346" y2="442"/>
+
+          <circle class="node" cx="52" cy="226" r="2.3"/>
+          <circle class="node" cx="58" cy="298" r="2.3"/>
+          <circle class="node" cx="66" cy="370" r="2.3"/>
+          <circle class="node" cx="74" cy="442" r="2.3"/>
+
+          <text x="396" y="229">Interface</text>
+          <text x="396" y="301">Services</text>
+          <text x="396" y="373">Data</text>
+          <text x="396" y="445">Operations</text>
+          <text x="396" y="512">Foundation</text>
+          <line class="band" x1="300" y1="509" x2="368" y2="509"/>
+        </svg>
+        <figcaption class="gate-cap">
+          <strong>The arch as an interface</strong>
+          A request enters at one end and passes through every layer. Nothing skips a level, and nothing is left unobserved.
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+  <!-- ===== Services ===== -->
+  <section class="section" id="services">
+    <div class="shell">
+      <div class="section-head">
+        <h2>What we build, and what we keep running.</h2>
+        <p>Five service lines. They can be taken separately, but most clients end up using two or three of them at once — building, integrating, and then staying on to operate.</p>
+      </div>
+
+      <div class="ledger" id="ledger">
+        <div class="srow">
+          <button class="srow-btn" type="button" aria-expanded="false" aria-controls="sv1">
+            <span class="srow-main">
+              <span class="srow-title"><span class="idx">01</span>Custom software development</span>
+              <span class="srow-sum">Applications shaped around the way your business already works, instead of the other direction.</span>
+              <span class="srow-tags"><span class="tag">Internal tools</span><span class="tag">Workflow systems</span><span class="tag">Web applications</span></span>
+            </span>
+            <span class="toggle" aria-hidden="true"><svg viewBox="0 0 12 12"><line x1="0" y1="6" x2="12" y2="6" stroke="#14211C" stroke-width="1.6"/><line x1="6" y1="0" x2="6" y2="12" stroke="#14211C" stroke-width="1.6"/></svg></span>
+          </button>
+          <div class="detail" id="sv1">
+            <div class="detail-grid">
+              <ul class="detail-list">
+                <li>Workflow and exception mapping before any screen is drawn</li>
+                <li>A data model agreed with the people who keep the records</li>
+                <li>Incremental delivery, each step reviewable in a working build</li>
+                <li>Documentation and a handover session at close</li>
+              </ul>
+              <p class="detail-aside"><strong>Typical shape</strong>A defined scope, a written plan, and delivery in two-week increments until the system is in daily use.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="srow">
+          <button class="srow-btn" type="button" aria-expanded="false" aria-controls="sv2">
+            <span class="srow-main">
+              <span class="srow-title"><span class="idx">02</span>Platform and cloud engineering</span>
+              <span class="srow-sum">The environments, pipelines and infrastructure that let a team ship without holding its breath.</span>
+              <span class="srow-tags"><span class="tag">CI/CD</span><span class="tag">Containers</span><span class="tag">Infrastructure as code</span></span>
+            </span>
+            <span class="toggle" aria-hidden="true"><svg viewBox="0 0 12 12"><line x1="0" y1="6" x2="12" y2="6" stroke="#14211C" stroke-width="1.6"/><line x1="6" y1="0" x2="6" y2="12" stroke="#14211C" stroke-width="1.6"/></svg></span>
+          </button>
+          <div class="detail" id="sv2">
+            <div class="detail-grid">
+              <ul class="detail-list">
+                <li>Reproducible local, staging and production environments</li>
+                <li>Deployment pipelines with automated checks and a working rollback</li>
+                <li>Infrastructure defined in version control, not in a console</li>
+                <li>Capacity and cost reviewed against real traffic, not estimates</li>
+              </ul>
+              <p class="detail-aside"><strong>Typical shape</strong>A short audit, a migration plan, then a staged rebuild that never leaves production without a route back.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="srow">
+          <button class="srow-btn" type="button" aria-expanded="false" aria-controls="sv3">
+            <span class="srow-main">
+              <span class="srow-title"><span class="idx">03</span>Product engineering</span>
+              <span class="srow-sum">Sustained development for products that are already in customers’ hands.</span>
+              <span class="srow-tags"><span class="tag">Feature delivery</span><span class="tag">Performance</span><span class="tag">Accessibility</span></span>
+            </span>
+            <span class="toggle" aria-hidden="true"><svg viewBox="0 0 12 12"><line x1="0" y1="6" x2="12" y2="6" stroke="#14211C" stroke-width="1.6"/><line x1="6" y1="0" x2="6" y2="12" stroke="#14211C" stroke-width="1.6"/></svg></span>
+          </button>
+          <div class="detail" id="sv3">
+            <div class="detail-grid">
+              <ul class="detail-list">
+                <li>Features shipped behind flags, so a release is a decision rather than a risk</li>
+                <li>Performance budgets held across releases, not only at launch</li>
+                <li>Accessibility checked against WCAG 2.2 AA on every user-facing flow</li>
+                <li>Test coverage that grows with the parts of the product that carry weight</li>
+              </ul>
+              <p class="detail-aside"><strong>Typical shape</strong>Engineers inside your product team, planning in your rhythm, attending your reviews.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="srow">
+          <button class="srow-btn" type="button" aria-expanded="false" aria-controls="sv4">
+            <span class="srow-main">
+              <span class="srow-title"><span class="idx">04</span>Data and integration</span>
+              <span class="srow-sum">Moving records between systems without losing their meaning on the way.</span>
+              <span class="srow-tags"><span class="tag">APIs</span><span class="tag">Event streams</span><span class="tag">Migration</span></span>
+            </span>
+            <span class="toggle" aria-hidden="true"><svg viewBox="0 0 12 12"><line x1="0" y1="6" x2="12" y2="6" stroke="#14211C" stroke-width="1.6"/><line x1="6" y1="0" x2="6" y2="12" stroke="#14211C" stroke-width="1.6"/></svg></span>
+          </button>
+          <div class="detail" id="sv4">
+            <div class="detail-grid">
+              <ul class="detail-list">
+                <li>One agreed definition per field, written down where everyone can read it</li>
+                <li>Contracts for APIs and events, with versioning that does not break callers</li>
+                <li>Migration rehearsals on real data volumes before the switch</li>
+                <li>Reconciliation and audit trails for anything that touches money or records</li>
+              </ul>
+              <p class="detail-aside"><strong>Typical shape</strong>A definition phase measured in weeks, then a parallel run alongside the legacy path.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="srow">
+          <button class="srow-btn" type="button" aria-expanded="false" aria-controls="sv5">
+            <span class="srow-main">
+              <span class="srow-title"><span class="idx">05</span>Support and operations</span>
+              <span class="srow-sum">The years after launch, handled by the people who built the thing.</span>
+              <span class="srow-tags"><span class="tag">Monitoring</span><span class="tag">Incident response</span><span class="tag">Maintenance</span></span>
+            </span>
+            <span class="toggle" aria-hidden="true"><svg viewBox="0 0 12 12"><line x1="0" y1="6" x2="12" y2="6" stroke="#14211C" stroke-width="1.6"/><line x1="6" y1="0" x2="6" y2="12" stroke="#14211C" stroke-width="1.6"/></svg></span>
+          </button>
+          <div class="detail" id="sv5">
+            <div class="detail-grid">
+              <ul class="detail-list">
+                <li>Monitoring and alerting tuned so that a page means something</li>
+                <li>Written runbooks for the failures worth rehearsing</li>
+                <li>Scheduled maintenance windows that respect your operating hours</li>
+                <li>Modernisation planned in advance, rather than forced by an incident</li>
+              </ul>
+              <p class="detail-aside"><strong>Typical shape</strong>A retained team with agreed response targets, a quarterly review, and a named owner for each system.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Approach ===== -->
+  <section class="section" id="approach">
+    <div class="shell">
+      <div class="section-head">
+        <h2>How work moves through the studio.</h2>
+        <p>Five stages, with a decision and an artefact at the end of each. No stage begins before the one beneath it is signed off.</p>
+      </div>
+
+      <div class="timeline">
+        <div class="stage">
+          <p class="stage-when">Stage one</p><span class="stage-dot" aria-hidden="true"></span>
+          <div class="stage-body">
+            <h3>Definition</h3>
+            <p>Reading, interviewing and mapping the work as it is actually done — including the exceptions nobody documents. Scope, risks and trade-offs land in one document you can argue with.</p>
+            <p class="stage-leave"><span>Leaves you with</span> A written scope, a risk list, and an honest estimate.</p>
+          </div>
+        </div>
+        <div class="stage">
+          <p class="stage-when">Stage two</p><span class="stage-dot" aria-hidden="true"></span>
+          <div class="stage-body">
+            <h3>Architecture</h3>
+            <p>The shape of the system before the first line of production code: boundaries, data ownership, failure modes, and what we deliberately choose not to build.</p>
+            <p class="stage-leave"><span>Leaves you with</span> A diagram, a set of decisions, and their reasons.</p>
+          </div>
+        </div>
+        <div class="stage">
+          <p class="stage-when">Stage three</p><span class="stage-dot" aria-hidden="true"></span>
+          <div class="stage-body">
+            <h3>Build</h3>
+            <p>Two-week increments, each ending in something you can open and use. Review and re-planning happen inside the increment, not after it closes.</p>
+            <p class="stage-leave"><span>Leaves you with</span> A working build every fourteen days, and a changelog you can read.</p>
+          </div>
+        </div>
+        <div class="stage">
+          <p class="stage-when">Stage four</p><span class="stage-dot" aria-hidden="true"></span>
+          <div class="stage-body">
+            <h3>Hardening</h3>
+            <p>Load, security, accessibility and recovery tested against the conditions of real use. Then a handover, so your team can run what we built.</p>
+            <p class="stage-leave"><span>Leaves you with</span> Test results, runbooks, and a handover that was rehearsed.</p>
+          </div>
+        </div>
+        <div class="stage">
+          <p class="stage-when">Stage five</p><span class="stage-dot" aria-hidden="true"></span>
+          <div class="stage-body">
+            <h3>Operation</h3>
+            <p>Monitoring, maintenance and improvement under an agreed response standard, for as long as the system is needed — and until someone else can take it on.</p>
+            <p class="stage-leave"><span>Leaves you with</span> A system that is watched, maintained, and documented.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ===== Standards ===== -->
+  <section class="section section-dark" id="standards">
+    <div class="shell">
+      <div class="section-head">
+        <div>
+          <p class="section-label">Engineering standards</p>
+          <h2 style="margin-top:.6rem">The rules we do not trade away.</h2>
+        </div>
+        <p>Every project is different. These do not change with the project, the deadline, or the size of the budget.</p>
+      </div>
+
+      <div class="standards">
+        <div class="std">
+          <span class="std-mark" aria-hidden="true"></span>
+          <h3>Readable before clever</h3>
+          <p>A stranger should be able to follow a payment path in twenty minutes. If they cannot, the work is not finished — however impressive the code looks.</p>
+        </div>
+        <div class="std">
+          <span class="std-mark" aria-hidden="true"></span>
+          <h3>Tested where failure is expensive</h3>
+          <p>Coverage follows consequence, not a percentage target. The checkout path and the audit log get attention because of what breaks if they fail.</p>
+        </div>
+        <div class="std">
+          <span class="std-mark" aria-hidden="true"></span>
+          <h3>Observable from the first release</h3>
+          <p>Logs, metrics and traces ship with the feature. A system that cannot tell you why it failed is not yet in production, whatever the deployment says.</p>
+        </div>
+        <div class="std">
+          <span class="std-mark" aria-hidden="true"></span>
+          <h3>Secure at the boundary</h3>
+          <p>Least privilege by default, input validated where it enters, dependencies kept current, secrets kept out of the repository.</p>
+        </div>
+      </div>
+
+      <p class="std-quote">If we cannot explain a decision to the person who will maintain it, <span>we have not finished deciding.</span></p>
+    </div>
+  </section>
+
+  <!-- ===== Technology ===== -->
+  <section class="section" id="technology">
+    <div class="shell">
+      <div class="section-head">
+        <h2>Technology, chosen for the work.</h2>
+        <p>We work with a known set of tools and add reluctantly. The smallest stack that does the job is usually the one that survives the longest.</p>
+      </div>
+
+      <div class="stack-grid">
+        <div class="stack-col">
+          <h3>Interface</h3>
+          <ul><li>TypeScript</li><li>React</li><li>Vue</li><li>Svelte</li><li>Tailwind CSS</li><li>Web components</li></ul>
+        </div>
+        <div class="stack-col">
+          <h3>Server</h3>
+          <ul><li>Node.js</li><li>Go</li><li>Python</li><li>.NET</li><li>Java</li><li>GraphQL</li><li>REST</li></ul>
+        </div>
+        <div class="stack-col">
+          <h3>Data</h3>
+          <ul><li>PostgreSQL</li><li>MySQL</li><li>Redis</li><li>Kafka</li><li>ClickHouse</li><li>Elasticsearch</li></ul>
+        </div>
+        <div class="stack-col">
+          <h3>Platform</h3>
+          <ul><li>AWS</li><li>Azure</li><li>Google Cloud</li><li>Docker</li><li>Kubernetes</li><li>Terraform</li><li>GitHub Actions</li></ul>
+        </div>
+        <div class="stack-col">
+          <h3>Quality</h3>
+          <ul><li>Playwright</li><li>Vitest</li><li>Jest</li><li>k6</li><li>OpenTelemetry</li><li>Sentry</li></ul>
+        </div>
+      </div>
+
+      <p class="stack-note"><strong>On legacy systems:</strong> we would rather work with what you already have than replace it for its own sake. A rewrite is a tool, not a default answer.</p>
+    </div>
+  </section>
+
+  <!-- ===== Engagements ===== -->
+  <section class="section" id="engagements">
+    <div class="shell">
+      <div class="section-head">
+        <h2>Three ways to work together.</h2>
+        <p>The engagement follows the problem: a defined outcome, a continuous product, or a system that is already in service.</p>
+      </div>
+
+      <div class="models-tabs" role="tablist" aria-label="Engagement models">
+        <button class="model-tab" type="button" role="tab" id="tab-a" aria-controls="panel-a" aria-selected="true">Fixed-scope build</button>
+        <button class="model-tab" type="button" role="tab" id="tab-b" aria-controls="panel-b" aria-selected="false">Embedded team</button>
+        <button class="model-tab" type="button" role="tab" id="tab-c" aria-controls="panel-c" aria-selected="false">Support retainer</button>
+      </div>
+
+      <div class="model-panel is-active" id="panel-a" role="tabpanel" aria-labelledby="tab-a" tabindex="0">
+        <div class="model-top">
+          <h3>A defined system, built to a written scope.</h3>
+          <p>For a first release, a replacement, or a piece of work with a clear end. Scope and price are agreed before the build starts, and changes are handled as formal amendments rather than quiet slippage.</p>
+        </div>
+        <dl class="model-facts">
+          <div class="fact"><dt>Best for</dt><dd>A clearly bounded system, an internal platform, a migration with a fixed destination.</dd></div>
+          <div class="fact"><dt>What it looks like</dt><dd>Definition phase, milestone delivery in two-week increments, a warranty period after acceptance.</dd></div>
+          <div class="fact"><dt>What you leave with</dt><dd>The running system, its documentation, and a team able to maintain it.</dd></div>
+        </dl>
+      </div>
+
+      <div class="model-panel" id="panel-b" role="tabpanel" aria-labelledby="tab-b" tabindex="0">
+        <div class="model-top">
+          <h3>Engineers inside your team, for the long stretch.</h3>
+          <p>For products that keep moving. Our people join your planning, your reviews and your on-call rota, and take responsibility for the areas they own.</p>
+        </div>
+        <dl class="model-facts">
+          <div class="fact"><dt>Best for</dt><dd>An existing product with a roadmap, or a team that needs capacity it cannot hire quickly.</dt></div>
+          <div class="fact"><dt>What it looks like</dt><dd>A dedicated group of engineers, monthly capacity, shared planning, and one technical lead who answers for the work.</dd></div>
+          <div class="fact"><dt>What you leave with</dt><dd>Continuous delivery, and engineering practice that stays with your own team.</dd></div>
+        </dl>
+      </div>
+
+      <div class="model-panel" id="panel-c" role="tabpanel" aria-labelledby="tab-c" tabindex="0">
+        <div class="model-top">
+          <h3>A named team on the other end of the pager.</h3>
+          <p>For systems already carrying day-to-day load. We take on the maintenance, the upgrades and the incidents, under targets written down before we start.</p>
+        </div>
+        <dl class="model-facts">
+          <div class="fact"><dt>Best for</dt><dd>Systems in production where the original team has moved on, or where internal capacity is thin.</dt></div>
+          <div class="fact"><dt>What it looks like</dt><dd>Agreed response and resolution targets, scheduled maintenance windows, a quarterly improvement plan.</dd></div>
+          <div class="fact"><dt>What you leave with</dt><dd>A system that is watched, patched and explained — not merely kept alive.</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+  <!-- ===== About ===== -->
+  <section class="section" id="about">
+    <div class="shell">
+      <div class="about-grid">
+        <div>
+          <p class="section-label">The studio</p>
+          <h2 class="about-lead" style="margin-top:.7rem">A small studio, deliberately. Exact work, repeated until it is <em>ordinary.</em></h2>
+        </div>
+        <div>
+          <div class="about-body">
+            <p>Wuan North Gate Restaurant is a software development and services company. We design and build custom systems, engineer the platforms they run on, and stay after launch to operate them.</p>
+            <p>Teams are kept small and senior. The people who scope the work are the people who write the code — and usually the people who answer when something goes wrong at eleven at night.</p>
+            <p>The name was earned in another trade, and we have kept it. What carried across is the habit: measured ingredients, no shortcuts, and a kitchen you would be willing to show a customer.</p>
+            <p>We take on fewer projects than we are asked to. That is on purpose. It is what keeps the standard where it is.</p>
+          </div>
+
+          <div class="what-we-dont">
+            <h3>What we don’t do</h3>
+            <ul>
+              <li>Staff a project we cannot supervise.</li>
+              <li>Promise a date before we have read the work.</li>
+              <li>Hand over a system without the notes needed to run it.</li>
+              <li>Call something finished because the invoice has been sent.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="shell">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="brand-name">Wuan North Gate Restaurant</span>
+        <p>Software development and services. Custom systems, platform engineering, data integration, and long-term support.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="fcol">
+          <h4>Services</h4>
+          <a href="#services">Custom software</a>
+          <a href="#services">Platform and cloud</a>
+          <a href="#services">Product engineering</a>
+          <a href="#services">Data and integration</a>
+          <a href="#services">Support and operations</a>
+        </div>
+        <div class="fcol">
+          <h4>Practice</h4>
+          <a href="#approach">Approach</a>
+          <a href="#standards">Standards</a>
+          <a href="#technology">Technology</a>
+          <a href="#engagements">Engagements</a>
+        </div>
+        <div class="fcol">
+          <h4>Studio</h4>
+          <a href="#about">About us</a>
+          <a href="#about">What we don’t do</a>
+          <a href="#top">Back to top</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Wuan North Gate Restaurant. All rights reserved.</p>
+      <p>This page is a static site: no tracking, no third-party scripts, and no forms.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---- mobile drawer ---- */
+  var drawer = document.getElementById("drawer");
+  var openBtn = document.getElementById("menuOpen");
+  var closeBtn = document.getElementById("menuClose");
+
+  function setDrawer(open){
+    drawer.classList.toggle("is-open", open);
+    drawer.setAttribute("aria-hidden", open ? "false" : "true");
+    openBtn.setAttribute("aria-expanded", open ? "true" : "false");
+    document.body.style.overflow = open ? "hidden" : "";
+    if(open){ closeBtn.focus(); } else { openBtn.focus(); }
+  }
+  openBtn.addEventListener("click", function(){ setDrawer(true); });
+  closeBtn.addEventListener("click", function(){ setDrawer(false); });
+  drawer.addEventListener("click", function(e){
+    if(e.target.closest("a")) setDrawer(false);
+  });
+  document.addEventListener("keydown", function(e){
+    if(e.key === "Escape" && drawer.classList.contains("is-open")) setDrawer(false);
+  });
+
+  /* ---- service accordion ---- */
+  var rows = Array.prototype.slice.call(document.querySelectorAll(".srow-btn"));
+  rows.forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var open = btn.getAttribute("aria-expanded") === "true";
+      rows.forEach(function(other){
+        var panel = document.getElementById(other.getAttribute("aria-controls"));
+        other.setAttribute("aria-expanded", "false");
+        if(panel) panel.classList.remove("is-open");
+      });
+      if(!open){
+        btn.setAttribute("aria-expanded", "true");
+        var target = document.getElementById(btn.getAttribute("aria-controls"));
+        if(target) target.classList.add("is-open");
+      }
+    });
+  });
+
+  /* ---- engagement tabs ---- */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll(".model-tab"));
+  tabs.forEach(function(tab){
+    tab.addEventListener("click", function(){
+      tabs.forEach(function(t){
+        t.setAttribute("aria-selected", "false");
+        var p = document.getElementById(t.getAttribute("aria-controls"));
+        if(p) p.classList.remove("is-active");
+      });
+      tab.setAttribute("aria-selected", "true");
+      var panel = document.getElementById(tab.getAttribute("aria-controls"));
+      if(panel) panel.classList.add("is-active");
+    });
+    tab.addEventListener("keydown", function(e){
+      var i = tabs.indexOf(tab);
+      var next = null;
+      if(e.key === "ArrowRight") next = tabs[(i + 1) % tabs.length];
+      if(e.key === "ArrowLeft") next = tabs[(i - 1 + tabs.length) % tabs.length];
+      if(next){ e.preventDefault(); next.focus(); next.click(); }
+    });
+  });
+
+  /* ---- nav scroll position ---- */
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll(".nav a"));
+  var sections = navLinks.map(function(a){ return document.querySelector(a.getAttribute("href")); });
+
+  if("IntersectionObserver" in window){
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(!entry.isIntersecting) return;
+        navLinks.forEach(function(a){
+          a.setAttribute("aria-current", a.getAttribute("href") === "#" + entry.target.id ? "true" : "false");
+        });
+      });
+    }, { rootMargin: "-45% 0px -50% 0px", threshold: [0] });
+    sections.forEach(function(s){ if(s) observer.observe(s); });
+  }
+})();
+</script>
+</body>
+</html>
